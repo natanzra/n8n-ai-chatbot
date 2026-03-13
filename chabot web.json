@@ -1,0 +1,115 @@
+{
+  "name": "chabot web",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Kamu adalah chatbot AI yang memberikan rekomendasi game mobile kepada pengguna.\n\nJawablah pertanyaan dengan jelas dan singkat.\n\nJika pertanyaan tidak berkaitan dengan game mobile, beri tahu dengan sopan bahwa chatbot ini hanya membahas game mobile."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        96,
+        0
+      ],
+      "id": "d69044a9-2f25-4b78-8153-2f5bfdad1069",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        96,
+        176
+      ],
+      "id": "94fe4a08-588a-4d54-a0aa-584013b93c2c",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "DSXrNatnFk1suBN8",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        304
+      ],
+      "id": "2ad07464-894f-4b38-8760-6f0036513c68",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\nMy name is Nuttela. How can I assist you today?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -80,
+        0
+      ],
+      "id": "7611878e-62d6-40a2-a8cc-478016e05c6d",
+      "name": "When chat message received",
+      "webhookId": "c16dbdf7-aa4c-4888-b921-c9764c2da653"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "02da37ff-6e52-4263-bbe5-6f3d9ad03486",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3daceff5c86313ebf3f47f1e744b0d129b3a14640ce2ece4c8dd32696e35ede3"
+  },
+  "id": "bx8TCGRVMzD5QRFX",
+  "tags": []
+}
